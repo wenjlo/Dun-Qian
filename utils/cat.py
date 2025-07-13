@@ -7,7 +7,7 @@ import numpy as np
 import logging
 import sys
 
-# Configure logging for Optuna to show progress
+
 optuna.logging.get_logger("optuna").addHandler(logging.StreamHandler(sys.stdout))
 
 
