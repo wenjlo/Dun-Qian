@@ -1,27 +1,37 @@
+import pickle
 import pandas as pd
-from config import numeric_cols,category_cols,target_col
-from utils.xgb import XGBoostOptimizer
-import seaborn as sns
-from scipy import stats
 import xgboost as xgb
-from sklearn.model_selection import train_test_split
+import catboost as cat
+from best_parameters import xgboost_parameters,catboost_parameters
+from sklearn.ensemble import StackingClassifier
+from sklearn.linear_model import LogisticRegression
+from config import numeric_cols,category_cols,target_col
 
-data_preproc = pd.read_csv("./data/fill_na_data.csv")
+def main():
+    data = pd.read_csv("./data/fill_na_data.csv")
 
-for c in numeric_cols:
-    data_preproc[c] = data_preproc[c].astype('float32')
-for c in category_cols:
-    data_preproc[c] = data_preproc[c].astype('category')
+    for c in numeric_cols:
+        data[c] = data[c].astype('float32')
+    for c in category_cols:
+        data[c] = data[c].astype('int').astype('category')
 
-data_preproc[target_col] = data_preproc[target_col].astype('category')
+    data[target_col] = data[target_col].astype('int')
 
-X_train, X_valid, y_train, y_valid = train_test_split(
-data_preproc[numeric_cols+category_cols], data_preproc[target_col], test_size=0.2, random_state=42)
+    x_train = data[numeric_cols+category_cols]
+    y_train = data[target_col]
 
-reg_optimizer = XGBoostOptimizer(X=X_train, y=y_train, model_type='classifier')
-reg_optimizer.optimize_params(
-        optuna_n_trials=100,
-        num_boost_round_per_trial=1000,
-        early_stopping_rounds_per_trial=1
-    )
-reg_optimizer.train_final_model()
+    xgboost = xgb.XGBClassifier(**xgboost_parameters, enable_categorical=True)
+    catboost = cat.CatBoostClassifier(**catboost_parameters, cat_features=category_cols)
+
+    xgboost.fit(x_train, y_train)
+    catboost.fit(x_train, y_train)
+
+    ensemble_stacking = StackingClassifier(estimators=[('catboost', catboost),
+                                                       ('XGBoost', xgboost)],
+                                           final_estimator=LogisticRegression())
+    ensemble_stacking.fit(x_train, y_train)
+    pickle.dump(ensemble_stacking, open('./model/xgb_catboost_stacking_model', 'wb'))
+    print('done')
+
+if __name__ == "__main__":
+    main()
