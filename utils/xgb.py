@@ -222,7 +222,7 @@ class XGBoostOptimizer:
             final_params,
             dtrain_final,
             num_boost_round=self.best_num_boost_round,
-            verbose_eval=100 # 可以打印進度
+            verbose_eval=100
         )
         print("最終模型訓練完成！")
 
