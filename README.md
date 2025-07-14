@@ -12,7 +12,9 @@
       - ID = 2,4,5,7 各有一個欄位有缺失值. => 使用xgboost + optuna 最佳化模型訓練並預測補值
         
 
-- **STEP2 .** 找出 xgboost,catboost 最佳化參數並驗證 
+- **STEP2 .** 找出 xgboost,catboost 最佳化參數並驗證  [EDA+Find XGB,Cat Parameters.ipynb](notebooks/EDA+Find%20XGB,Cat%20Parameters.ipynb#L124)
+
+
      - 1. 從STEP1. 補值後的資料 切分train data (80%) ,valid data(20%) 
      - 2. xgboost + optuna + cross validation (5 fold) 找出最佳參數
      - 3. catboost + optuna + cross validation (5 fold) 找出最佳化參數
