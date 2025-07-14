@@ -4,7 +4,8 @@
 ## 🚀 流程
 
 
-- **STEP1 .** 查看資料 [[code](notebooks/EDA+Find%20XGB,Cat%20Parameters.ipynb)]
+- **STEP1 .** 查看資料 [EDA+Find XGB,Cat Parameters.ipynb](notebooks/EDA+Find%20XGB,Cat%20Parameters.ipynb#L10)
+
       - 數值資料呈現右偏態,取∛ 
       - ID = 1 這筆有4個欄位: Browser, Region ,TrafficType ,VisitorType 有遺失值. => 使用眾數補值
       - ID = 2,4,5,7 各有一個欄位有缺失值. => 使用xgboost + optuna 最佳化模型訓練並預測補值
