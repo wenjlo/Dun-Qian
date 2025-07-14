@@ -2,7 +2,7 @@ import pickle
 import pandas as pd
 import xgboost as xgb
 import catboost as cat
-from best_parameters import xgboost_parameters,catboost_parameters
+from src.best_parameters import xgboost_parameters,catboost_parameters
 from sklearn.ensemble import StackingClassifier
 from sklearn.linear_model import LogisticRegression
 from config import numeric_cols,category_cols,target_col
@@ -30,7 +30,7 @@ def main():
                                                        ('XGBoost', xgboost)],
                                            final_estimator=LogisticRegression())
     ensemble_stacking.fit(x_train, y_train)
-    pickle.dump(ensemble_stacking, open('./model/xgb_catboost_stacking_model', 'wb'))
+    pickle.dump(ensemble_stacking, open('./models/xgb_catboost_stacking_model', 'wb'))
     print('done')
 
 if __name__ == "__main__":
