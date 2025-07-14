@@ -1,16 +1,14 @@
 # Dun-Qian
 
-## Table of Contents
-- [流程](#-about)
 
 ## 🚀 流程
 
 
-- **STEP1 .** 查看資料
-    - 數值資料呈現右偏態,取∛ 
-    - ID = 1 這筆有4個欄位: Browser, Region ,TrafficType ,VisitorType 有遺失值. => 使用眾數補值
-    - ID = 2,4,5,7 各有一個欄位有缺失值. => 使用xgboost + optuna 最佳化模型訓練並預測補值
-  
+- **STEP1 .** 查看資料 [[code](notebooks/EDA+Find%20XGB,Cat%20Parameters.ipynb)]
+      - 數值資料呈現右偏態,取∛ 
+      - ID = 1 這筆有4個欄位: Browser, Region ,TrafficType ,VisitorType 有遺失值. => 使用眾數補值
+      - ID = 2,4,5,7 各有一個欄位有缺失值. => 使用xgboost + optuna 最佳化模型訓練並預測補值
+        
 
 - **STEP2 .** 找出 xgboost,catboost 最佳化參數並驗證 
      - 1. 從STEP1. 補值後的資料 切分train data (80%) ,valid data(20%) 
@@ -27,3 +25,4 @@
      - 7. 使用最佳模型,參數 重新訓練整個data.csv
   
 - **STEP3 .** 訓練xgboost + catboost + voting
+    
