@@ -3,12 +3,12 @@ import pandas as pd
 import xgboost as xgb
 import catboost as cat
 from src.best_parameters import xgboost_parameters,catboost_parameters
-from sklearn.ensemble import StackingClassifier
+from sklearn.ensemble import VotingClassifier
 from sklearn.linear_model import LogisticRegression
 from docs import numeric_cols,category_cols,target_col
 
 def main():
-    data = pd.read_csv("../data/fill_na_data.csv")
+    data = pd.read_csv("../data/repaired_preprocessed_data.csv")
 
     for c in numeric_cols:
         data[c] = data[c].astype('float32')
@@ -27,11 +27,10 @@ def main():
     xgboost.fit(x_train, y_train)
     catboost.fit(x_train, y_train)
 
-    ensemble_stacking = StackingClassifier(estimators=[('catboost', catboost),
-                                                       ('XGBoost', xgboost)],
-                                           final_estimator=LogisticRegression())
+    ensemble_stacking = VotingClassifier(estimators=[('catboost', catboost),
+                                                       ('XGBoost', xgboost)],voting='soft')
     ensemble_stacking.fit(x_train, y_train)
-    pickle.dump(ensemble_stacking, open('../models/xgb_catboost_stacking_model', 'wb'))
+    pickle.dump(ensemble_stacking, open('../models/xgb_catboost_voting_model', 'wb'))
     print('done')
 
 if __name__ == "__main__":
