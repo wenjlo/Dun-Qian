@@ -4,7 +4,7 @@
 ## 🚀 流程
 
 
-- **STEP1 .** 查看資料 [EDA+Find XGB,Cat Parameters.ipynb](notebooks/EDA+Find%20XGB,Cat%20Parameters.ipynb#L124)
+- **STEP1 .** 查看資料 [notebook/EDA+Find XGB,Cat Parameters.ipynb](notebooks/EDA+Find%20XGB,Cat%20Parameters.ipynb#L124)
 
      1. BounceRates (跳出率)不應該為負值,這邊當作缺失值處理
      2. 數值資料呈現右偏態,取∛
@@ -14,7 +14,7 @@
 
 
 
-- **STEP2 .** 找出 xgboost,catboost 最佳化參數並驗證  [EDA+Find XGB,Cat Parameters.ipynb](notebooks/EDA+Find%20XGB,Cat%20Parameters.ipynb#L124)
+- **STEP2 .** 找出 xgboost,catboost 最佳化參數並驗證  [notebook/EDA+Find XGB,Cat Parameters.ipynb](notebooks/EDA+Find%20XGB,Cat%20Parameters.ipynb#L124)
 
      1. 從STEP1. 補值後的資料 切分train data (80%) ,valid data(20%) 
      2. xgboost + optuna + cross validation (5 fold) 找出最佳參數 
@@ -29,11 +29,11 @@
            - Recall
      
   
-- **STEP3 .** 訓練xgboost + catboost + voting [train_model.py](src/train_model.py)
+- **STEP3 .** 訓練xgboost + catboost + voting [src/train_model.py](src/train_model.py)
 
     使用最佳模型(voting) 和參數([best_parameters](src/best_parameters.py)),重新訓練整個data.csv
 
 
-- **STEP4 .** 預測  [predict_model.py](src/predict_model.py)
+- **STEP4 .** 預測  [src/predict_model.py](src/predict_model.py)
       
     將預測解果輸出到 output/submission.csv
