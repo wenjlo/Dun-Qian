@@ -31,7 +31,7 @@
   
 - **STEP3 .** 訓練xgboost + catboost + voting [src/train_model.py](src/train_model.py)
 
-    使用最佳模型(voting) 和參數([best_parameters](src/best_parameters.py)),重新訓練整個data.csv
+    使用最佳模型(voting) 和參數([src/best_parameters](src/best_parameters.py)),重新訓練整個data.csv
 
 
 - **STEP4 .** 預測  [src/predict_model.py](src/predict_model.py)
